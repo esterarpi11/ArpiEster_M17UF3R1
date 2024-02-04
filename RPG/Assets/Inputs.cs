@@ -48,7 +48,7 @@ namespace GameInputs
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Apuntar"",
+                    ""name"": ""Aim"",
                     ""type"": ""Button"",
                     ""id"": ""8ecf58cb-1165-4227-9800-45f3e90088a4"",
                     ""expectedControlType"": ""Button"",
@@ -57,9 +57,36 @@ namespace GameInputs
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Disparar"",
+                    ""name"": ""Shoot"",
                     ""type"": ""Button"",
                     ""id"": ""cda7249b-1d68-4e5c-87c3-98b20d4123e8"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Dance"",
+                    ""type"": ""Button"",
+                    ""id"": ""07087cd0-db9e-410f-9180-c104a09324dd"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Crouch"",
+                    ""type"": ""Button"",
+                    ""id"": ""fa6d0d9e-3ba6-44d9-8c11-1600d4ba141f"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Run"",
+                    ""type"": ""Button"",
+                    ""id"": ""d344bfcf-4f75-493c-8798-bb4bee5b1c61"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -140,7 +167,7 @@ namespace GameInputs
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Apuntar"",
+                    ""action"": ""Aim"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -151,7 +178,40 @@ namespace GameInputs
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Disparar"",
+                    ""action"": ""Shoot"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7e912323-8394-4eae-98d2-937525f92beb"",
+                    ""path"": ""<Keyboard>/1"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Dance"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5c29d544-144e-467e-a611-f737997c3c36"",
+                    ""path"": ""<Keyboard>/shift"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Crouch"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""46bd2f27-6b60-42a5-9c2b-f90d9863b042"",
+                    ""path"": ""<Keyboard>/ctrl"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Run"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -164,8 +224,11 @@ namespace GameInputs
             m_MainPlayer = asset.FindActionMap("MainPlayer", throwIfNotFound: true);
             m_MainPlayer_Movement = m_MainPlayer.FindAction("Movement", throwIfNotFound: true);
             m_MainPlayer_Inventory = m_MainPlayer.FindAction("Inventory", throwIfNotFound: true);
-            m_MainPlayer_Apuntar = m_MainPlayer.FindAction("Apuntar", throwIfNotFound: true);
-            m_MainPlayer_Disparar = m_MainPlayer.FindAction("Disparar", throwIfNotFound: true);
+            m_MainPlayer_Aim = m_MainPlayer.FindAction("Aim", throwIfNotFound: true);
+            m_MainPlayer_Shoot = m_MainPlayer.FindAction("Shoot", throwIfNotFound: true);
+            m_MainPlayer_Dance = m_MainPlayer.FindAction("Dance", throwIfNotFound: true);
+            m_MainPlayer_Crouch = m_MainPlayer.FindAction("Crouch", throwIfNotFound: true);
+            m_MainPlayer_Run = m_MainPlayer.FindAction("Run", throwIfNotFound: true);
         }
 
         public void Dispose()
@@ -229,16 +292,22 @@ namespace GameInputs
         private List<IMainPlayerActions> m_MainPlayerActionsCallbackInterfaces = new List<IMainPlayerActions>();
         private readonly InputAction m_MainPlayer_Movement;
         private readonly InputAction m_MainPlayer_Inventory;
-        private readonly InputAction m_MainPlayer_Apuntar;
-        private readonly InputAction m_MainPlayer_Disparar;
+        private readonly InputAction m_MainPlayer_Aim;
+        private readonly InputAction m_MainPlayer_Shoot;
+        private readonly InputAction m_MainPlayer_Dance;
+        private readonly InputAction m_MainPlayer_Crouch;
+        private readonly InputAction m_MainPlayer_Run;
         public struct MainPlayerActions
         {
             private @Inputs m_Wrapper;
             public MainPlayerActions(@Inputs wrapper) { m_Wrapper = wrapper; }
             public InputAction @Movement => m_Wrapper.m_MainPlayer_Movement;
             public InputAction @Inventory => m_Wrapper.m_MainPlayer_Inventory;
-            public InputAction @Apuntar => m_Wrapper.m_MainPlayer_Apuntar;
-            public InputAction @Disparar => m_Wrapper.m_MainPlayer_Disparar;
+            public InputAction @Aim => m_Wrapper.m_MainPlayer_Aim;
+            public InputAction @Shoot => m_Wrapper.m_MainPlayer_Shoot;
+            public InputAction @Dance => m_Wrapper.m_MainPlayer_Dance;
+            public InputAction @Crouch => m_Wrapper.m_MainPlayer_Crouch;
+            public InputAction @Run => m_Wrapper.m_MainPlayer_Run;
             public InputActionMap Get() { return m_Wrapper.m_MainPlayer; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -254,12 +323,21 @@ namespace GameInputs
                 @Inventory.started += instance.OnInventory;
                 @Inventory.performed += instance.OnInventory;
                 @Inventory.canceled += instance.OnInventory;
-                @Apuntar.started += instance.OnApuntar;
-                @Apuntar.performed += instance.OnApuntar;
-                @Apuntar.canceled += instance.OnApuntar;
-                @Disparar.started += instance.OnDisparar;
-                @Disparar.performed += instance.OnDisparar;
-                @Disparar.canceled += instance.OnDisparar;
+                @Aim.started += instance.OnAim;
+                @Aim.performed += instance.OnAim;
+                @Aim.canceled += instance.OnAim;
+                @Shoot.started += instance.OnShoot;
+                @Shoot.performed += instance.OnShoot;
+                @Shoot.canceled += instance.OnShoot;
+                @Dance.started += instance.OnDance;
+                @Dance.performed += instance.OnDance;
+                @Dance.canceled += instance.OnDance;
+                @Crouch.started += instance.OnCrouch;
+                @Crouch.performed += instance.OnCrouch;
+                @Crouch.canceled += instance.OnCrouch;
+                @Run.started += instance.OnRun;
+                @Run.performed += instance.OnRun;
+                @Run.canceled += instance.OnRun;
             }
 
             private void UnregisterCallbacks(IMainPlayerActions instance)
@@ -270,12 +348,21 @@ namespace GameInputs
                 @Inventory.started -= instance.OnInventory;
                 @Inventory.performed -= instance.OnInventory;
                 @Inventory.canceled -= instance.OnInventory;
-                @Apuntar.started -= instance.OnApuntar;
-                @Apuntar.performed -= instance.OnApuntar;
-                @Apuntar.canceled -= instance.OnApuntar;
-                @Disparar.started -= instance.OnDisparar;
-                @Disparar.performed -= instance.OnDisparar;
-                @Disparar.canceled -= instance.OnDisparar;
+                @Aim.started -= instance.OnAim;
+                @Aim.performed -= instance.OnAim;
+                @Aim.canceled -= instance.OnAim;
+                @Shoot.started -= instance.OnShoot;
+                @Shoot.performed -= instance.OnShoot;
+                @Shoot.canceled -= instance.OnShoot;
+                @Dance.started -= instance.OnDance;
+                @Dance.performed -= instance.OnDance;
+                @Dance.canceled -= instance.OnDance;
+                @Crouch.started -= instance.OnCrouch;
+                @Crouch.performed -= instance.OnCrouch;
+                @Crouch.canceled -= instance.OnCrouch;
+                @Run.started -= instance.OnRun;
+                @Run.performed -= instance.OnRun;
+                @Run.canceled -= instance.OnRun;
             }
 
             public void RemoveCallbacks(IMainPlayerActions instance)
@@ -297,8 +384,11 @@ namespace GameInputs
         {
             void OnMovement(InputAction.CallbackContext context);
             void OnInventory(InputAction.CallbackContext context);
-            void OnApuntar(InputAction.CallbackContext context);
-            void OnDisparar(InputAction.CallbackContext context);
+            void OnAim(InputAction.CallbackContext context);
+            void OnShoot(InputAction.CallbackContext context);
+            void OnDance(InputAction.CallbackContext context);
+            void OnCrouch(InputAction.CallbackContext context);
+            void OnRun(InputAction.CallbackContext context);
         }
     }
 }
