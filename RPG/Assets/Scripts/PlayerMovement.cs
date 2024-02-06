@@ -8,20 +8,32 @@ using UnityEngine.InputSystem;
 public class PlayerMovement : MonoBehaviour
 {
     public static PlayerMovement Instance;
-    public MainPlayer player;
-    protected Inputs _inputs;
-    protected Vector3 moveDirection;
-    public Transform orientation;
-    protected Rigidbody _rigidBody;
-    protected float _movementSpeed;
 
-    protected float horizontalInput;
-    protected float verticalInput;
+    public Animator animator;
+    protected Inputs _inputs;
+
+    protected Vector3 moveDirection;
+
+    int isWalkingHash;
+    int isRunningHash;
+
+    Vector2 currentMovement;
+    bool movementPressed;
+    bool runPressed;
 
     private void Awake()
     {
         _inputs = new Inputs();
         _inputs.MainPlayer.Enable();
+        _inputs.MainPlayer.Movement.performed += ctx =>
+        {
+            currentMovement = ctx.ReadValue<Vector2>();
+            movementPressed = currentMovement.x != 0 || currentMovement.y != 0;
+        }; 
+        _inputs.MainPlayer.Run.performed += ctx =>
+        {
+            runPressed = true;
+        };
 
         if (Instance == null)
         {
@@ -33,28 +45,35 @@ public class PlayerMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        _movementSpeed = player.player.speed;
-        _inputs.MainPlayer.Movement.performed += Move_Performed;
-        _rigidBody = GetComponent<Rigidbody>();
-        _rigidBody.freezeRotation = true;
-
-        horizontalInput = Input.GetAxis("Horizontal");
-        verticalInput = Input.GetAxis("Vertical"); ;
+        isWalkingHash = Animator.StringToHash("isWalking");
+        isRunningHash = Animator.StringToHash("isRunning");
     }
-
-    // Update is called once per frame
     void Update()
     {
-        
+        handleMovement();
+        Debug.Log(runPressed);
+
     }
-    private void Move_Performed(InputAction.CallbackContext obj)
+    void handleMovement()
     {
-        player._animator.SetBool("Running", true);
-        MovePlayer();
-    }
-    private void MovePlayer()
-    {
-        moveDirection = orientation.forward * verticalInput + orientation.right * horizontalInput;
-        _rigidBody.AddForce(moveDirection.normalized * _movementSpeed  * 10f, ForceMode.Force);
+        bool isWalking = animator.GetBool(isWalkingHash);
+        bool isRunning = animator.GetBool(isRunningHash);
+
+        if (movementPressed && !isWalking)
+        {
+            animator.SetBool(isWalkingHash, true);
+        }
+        if (!movementPressed && isWalking)
+        {
+            animator.SetBool(isWalkingHash, false);
+        }
+        if(movementPressed && runPressed && !isRunning)
+        {
+            animator.SetBool(isRunningHash, true);
+        }
+        if ((!movementPressed || !runPressed) && isRunning)
+        {
+            animator.SetBool(isRunningHash, false);
+        }
     }
 }
