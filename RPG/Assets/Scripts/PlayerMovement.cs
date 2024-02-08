@@ -5,9 +5,9 @@ using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerMovement : MonoBehaviour
+public class MoveBehaviour : MonoBehaviour
 {
-    public static PlayerMovement Instance;
+    public static MoveBehaviour Instance;
 
     public Animator animator;
     protected Inputs _inputs;
@@ -16,10 +16,13 @@ public class PlayerMovement : MonoBehaviour
 
     int isWalkingHash;
     int isRunningHash;
+    int isCrouchingHash;
+    int isCrouchingAndMovingHash;
 
     Vector2 currentMovement;
     bool movementPressed;
     bool runPressed;
+    bool crouchPressed;
 
     private void Awake()
     {
@@ -34,6 +37,10 @@ public class PlayerMovement : MonoBehaviour
         {
             runPressed = true;
         };
+        _inputs.MainPlayer.Crouch.performed += ctx =>
+        {
+            crouchPressed = true;
+        };
 
         if (Instance == null)
         {
@@ -47,17 +54,18 @@ public class PlayerMovement : MonoBehaviour
     {
         isWalkingHash = Animator.StringToHash("isWalking");
         isRunningHash = Animator.StringToHash("isRunning");
+        isCrouchingHash = Animator.StringToHash("isCrouching");
+        isCrouchingAndMovingHash = Animator.StringToHash("isCrouchingAndMoving");
     }
     void Update()
     {
         handleMovement();
-        Debug.Log(runPressed);
-
     }
     void handleMovement()
     {
         bool isWalking = animator.GetBool(isWalkingHash);
         bool isRunning = animator.GetBool(isRunningHash);
+        bool isCrouching = animator.GetBool(isCrouchingHash);
 
         if (movementPressed && !isWalking)
         {
@@ -74,6 +82,28 @@ public class PlayerMovement : MonoBehaviour
         if ((!movementPressed || !runPressed) && isRunning)
         {
             animator.SetBool(isRunningHash, false);
+        }
+
+        if (crouchPressed && !isCrouching)
+        {
+            animator.SetBool(isCrouchingHash, true);
+        }
+        if (!crouchPressed && isCrouching)
+        {
+            animator.SetBool(isCrouchingHash, false);
+        }
+        if ((crouchPressed && movementPressed) && isCrouching)
+        {
+            animator.SetBool(isCrouchingAndMovingHash, true);
+        }
+        if ((crouchPressed && !movementPressed) && isCrouching)
+        {
+            animator.SetBool(isCrouchingAndMovingHash, false);
+        }
+
+        if ((!crouchPressed && movementPressed && runPressed) && isCrouching)
+        {
+            animator.SetBool(isRunningHash, true);
         }
     }
 }

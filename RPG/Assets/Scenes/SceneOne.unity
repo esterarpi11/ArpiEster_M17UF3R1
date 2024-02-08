@@ -188,7 +188,7 @@ Transform:
   m_GameObject: {fileID: 557374974}
   serializedVersion: 2
   m_LocalRotation: {x: -0.010246498, y: -0.00039316714, z: -0.000004028798, w: 0.9999474}
-  m_LocalPosition: {x: 5.276, y: 4.1879997, z: -1.6999999}
+  m_LocalPosition: {x: 5.18, y: 4.1879997, z: -1.7699999}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -478,7 +478,7 @@ Transform:
   m_GameObject: {fileID: 1368656393}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5.276, y: 4.1879997, z: -1.6999999}
+  m_LocalPosition: {x: 5.18, y: 4.1879997, z: -1.7699999}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -611,13 +611,13 @@ MonoBehaviour:
   Damping: {x: 0.1, y: 0.5, z: 5}
   ShoulderOffset: {x: 0.5, y: -0.4, z: 0}
   VerticalArmLength: 0.4
-  CameraSide: 0.576
-  CameraDistance: 3.54
+  CameraSide: 0.48
+  CameraDistance: 3.61
   CameraCollisionFilter:
     serializedVersion: 2
     m_Bits: 0
   IgnoreTag: 
-  CameraRadius: 0.2
+  CameraRadius: 0.403
   DampingIntoCollision: 0
   DampingFromCollision: 2
 --- !u!114 &1415550554

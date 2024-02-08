@@ -11,5 +11,4 @@ public class Character : ScriptableObject
     public float speed = 0f;
     public float coolDown = 0f;
     public bool isDead = false;
-    public bool isRunning = false;
 }
