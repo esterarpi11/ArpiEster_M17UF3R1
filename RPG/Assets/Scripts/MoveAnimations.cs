@@ -5,9 +5,9 @@ using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class MoveBehaviour : MonoBehaviour
+public class MoveAnimations : MonoBehaviour
 {
-    public static MoveBehaviour Instance;
+    public static MoveAnimations Instance;
 
     public Animator animator;
     protected Inputs _inputs;
@@ -35,11 +35,11 @@ public class MoveBehaviour : MonoBehaviour
         }; 
         _inputs.MainPlayer.Run.performed += ctx =>
         {
-            runPressed = true;
+            runPressed = !runPressed;
         };
         _inputs.MainPlayer.Crouch.performed += ctx =>
         {
-            crouchPressed = true;
+            crouchPressed = !crouchPressed;
         };
 
         if (Instance == null)
@@ -92,18 +92,13 @@ public class MoveBehaviour : MonoBehaviour
         {
             animator.SetBool(isCrouchingHash, false);
         }
-        if ((crouchPressed && movementPressed) && isCrouching)
+        if (movementPressed && isCrouching)
         {
             animator.SetBool(isCrouchingAndMovingHash, true);
         }
-        if ((crouchPressed && !movementPressed) && isCrouching)
+        if ((!movementPressed || !crouchPressed) && isCrouching)
         {
             animator.SetBool(isCrouchingAndMovingHash, false);
-        }
-
-        if ((!crouchPressed && movementPressed && runPressed) && isCrouching)
-        {
-            animator.SetBool(isRunningHash, true);
         }
     }
 }
