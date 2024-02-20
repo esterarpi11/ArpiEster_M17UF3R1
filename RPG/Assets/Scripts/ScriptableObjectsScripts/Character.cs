@@ -5,10 +5,10 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "New character", menuName = "World/Character")]
 public class Character : ScriptableObject
 {
-    new public string name = "";
-    public float health = 0f;
-    public float maxHealth = 0f;
-    public float speed = 0f;
-    public float coolDown = 0f;
+    new public string name = "Shubur";
+    public float health = 100f;
+    public float maxHealth = 100f;
+    public float speed = 5f;
+    public float coolDown = 3f;
     public bool isDead = false;
 }

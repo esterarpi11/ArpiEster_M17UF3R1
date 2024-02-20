@@ -15,14 +15,13 @@ public class InputController : MonoBehaviour
     public static event Action Walk = delegate { };
     public static event Action Run = delegate { };
 
-    Vector2 currentMovement;
+    protected Vector2 currentDirection;
 
     private void Awake()
     {
         _inputs = new Inputs();
         _inputs.MainPlayer.Movement.performed += ctx =>
         {
-            //currentMovement = ctx.ReadValue<Vector2>();
             Walk.Invoke();
         }; 
         _inputs.MainPlayer.Run.performed += ctx =>
@@ -56,7 +55,7 @@ public class InputController : MonoBehaviour
     }
     void Update()
     {
-        
+
     }
     
 }

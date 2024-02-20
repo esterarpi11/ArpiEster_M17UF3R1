@@ -337,7 +337,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
-  _animator: {fileID: 0}
+  _transform: {fileID: 0}
 --- !u!65 &670151243
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1093,12 +1093,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1937570480}
   m_PrefabAsset: {fileID: 0}
---- !u!95 &1937570486 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 5866666021909216657, guid: 3bcd8dc043e751d439a14c69b71efdd8,
-    type: 3}
-  m_PrefabInstance: {fileID: 1937570480}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &1937570487
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1112,7 +1106,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 11400000, guid: 8d5e9e65995486f40bcabdcb857ecd05, type: 2}
-  _animator: {fileID: 1937570486}
+  _transform: {fileID: 670151241}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
