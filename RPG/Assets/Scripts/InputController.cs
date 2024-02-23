@@ -12,17 +12,20 @@ public class InputController : MonoBehaviour
     protected Inputs _inputs;
 
     public static event Action Crouch = delegate { };
-    public static event Action Walk = delegate { };
+    public static event Action<bool> Walk = delegate { };
     public static event Action Run = delegate { };
+    public static event Action Aim = delegate { };
+    public static event Action Shoot = delegate { };
 
-    protected Vector2 currentDirection;
+    protected Vector2 currentMovement;
 
     private void Awake()
     {
         _inputs = new Inputs();
         _inputs.MainPlayer.Movement.performed += ctx =>
         {
-            Walk.Invoke();
+            currentMovement = ctx.ReadValue<Vector2>();
+            Walk.Invoke(currentMovement.magnitude > 0);
         }; 
         _inputs.MainPlayer.Run.performed += ctx =>
         {            
@@ -31,6 +34,14 @@ public class InputController : MonoBehaviour
         _inputs.MainPlayer.Crouch.performed += ctx =>
         {           
             Crouch.Invoke();
+        };
+        _inputs.MainPlayer.Aim.performed += ctx =>
+        {
+            Aim.Invoke();
+        };
+        _inputs.MainPlayer.Crouch.performed += ctx =>
+        {
+            Shoot.Invoke();
         };
 
         if (Instance == null)
@@ -48,14 +59,14 @@ public class InputController : MonoBehaviour
     {
         _inputs.MainPlayer.Disable();
     }
+
     // Start is called before the first frame update
     void Start()
     {
-        
     }
     void Update()
     {
-
+        MainPlayer.Instance.HandleMovement(currentMovement);
+        MainPlayer.Instance.HandleRotation(currentMovement);
     }
-    
 }

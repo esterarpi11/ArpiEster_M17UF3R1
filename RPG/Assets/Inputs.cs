@@ -164,7 +164,7 @@ namespace GameInputs
                     ""name"": """",
                     ""id"": ""183cdaa1-81ec-46b2-88f4-45b20dd3a38e"",
                     ""path"": ""<Mouse>/rightButton"",
-                    ""interactions"": """",
+                    ""interactions"": ""Press(behavior=2)"",
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Aim"",

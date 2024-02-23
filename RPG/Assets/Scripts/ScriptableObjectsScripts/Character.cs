@@ -8,7 +8,7 @@ public class Character : ScriptableObject
     new public string name = "Shubur";
     public float health = 100f;
     public float maxHealth = 100f;
-    public float speed = 5f;
+    public float speed = 3f;
     public float coolDown = 3f;
     public bool isDead = false;
 }
