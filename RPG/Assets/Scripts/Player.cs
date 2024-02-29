@@ -42,9 +42,11 @@ public class MainPlayer : MonoBehaviour
     {
         //_transform.Rotate(Vector3.up, direction.x * currentSpeed * Time.deltaTime);
 
-        //float rotationX = Mathf.Clamp(direction.y*currentSpeed, -45f, 45f);
-        ////playerCamera.transform.localRotation = Quaternion.Euler(rotationX, 0, 0);
-        //_transform.rotation *= Quaternion.Euler(0, direction.x*currentSpeed, 0);
+        //float rotationX = Mathf.Clamp(direction.y * currentSpeed, -45f, 45f);
+        //playerCamera.transform.localRotation = Quaternion.Euler(rotationX, 0, 0);
+        //_transform.rotation *= Quaternion.Euler(0, direction.x * currentSpeed, 0);
+
+        _transform.Rotate(new Vector3(0, direction.x * currentSpeed, 0));
 
         //if ((direction.x > 0.1 || direction.x < -0.1) || (direction.y > 0.1 || direction.y < 0.1))
         //{
@@ -62,6 +64,7 @@ public class MainPlayer : MonoBehaviour
     {
         //_transform.Translate(new Vector3(direction.x, 0f, direction.y) * currentSpeed * Time.deltaTime);
         rb.velocity = new Vector3(direction.x, 0f, direction.y) * currentSpeed;
+        //rb.velocity = transform.position.z * direction.y * currentSpeed;
     }
     void RunHandler()
     {
