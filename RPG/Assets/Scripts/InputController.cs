@@ -16,6 +16,7 @@ public class InputController : MonoBehaviour
     public static event Action Run = delegate { };
     public static event Action Aim = delegate { };
     public static event Action Shoot = delegate { };
+    public static event Action Jump = delegate { };
 
     protected Vector2 currentMovement;
 
@@ -39,9 +40,13 @@ public class InputController : MonoBehaviour
         {
             Aim.Invoke();
         };
-        _inputs.MainPlayer.Crouch.performed += ctx =>
+        _inputs.MainPlayer.Shoot.performed += ctx =>
         {
             Shoot.Invoke();
+        };
+        _inputs.MainPlayer.Jump.performed += ctx =>
+        {
+            Jump.Invoke();
         };
 
         if (Instance == null)

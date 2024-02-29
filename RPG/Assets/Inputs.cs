@@ -91,6 +91,15 @@ namespace GameInputs
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Jump"",
+                    ""type"": ""Button"",
+                    ""id"": ""175d3554-aaac-4280-851c-892f105d62a2"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -214,6 +223,17 @@ namespace GameInputs
                     ""action"": ""Run"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""37e7cda6-7a62-4680-9527-a8840a2914a3"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Jump"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -229,6 +249,7 @@ namespace GameInputs
             m_MainPlayer_Dance = m_MainPlayer.FindAction("Dance", throwIfNotFound: true);
             m_MainPlayer_Crouch = m_MainPlayer.FindAction("Crouch", throwIfNotFound: true);
             m_MainPlayer_Run = m_MainPlayer.FindAction("Run", throwIfNotFound: true);
+            m_MainPlayer_Jump = m_MainPlayer.FindAction("Jump", throwIfNotFound: true);
         }
 
         public void Dispose()
@@ -297,6 +318,7 @@ namespace GameInputs
         private readonly InputAction m_MainPlayer_Dance;
         private readonly InputAction m_MainPlayer_Crouch;
         private readonly InputAction m_MainPlayer_Run;
+        private readonly InputAction m_MainPlayer_Jump;
         public struct MainPlayerActions
         {
             private @Inputs m_Wrapper;
@@ -308,6 +330,7 @@ namespace GameInputs
             public InputAction @Dance => m_Wrapper.m_MainPlayer_Dance;
             public InputAction @Crouch => m_Wrapper.m_MainPlayer_Crouch;
             public InputAction @Run => m_Wrapper.m_MainPlayer_Run;
+            public InputAction @Jump => m_Wrapper.m_MainPlayer_Jump;
             public InputActionMap Get() { return m_Wrapper.m_MainPlayer; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -338,6 +361,9 @@ namespace GameInputs
                 @Run.started += instance.OnRun;
                 @Run.performed += instance.OnRun;
                 @Run.canceled += instance.OnRun;
+                @Jump.started += instance.OnJump;
+                @Jump.performed += instance.OnJump;
+                @Jump.canceled += instance.OnJump;
             }
 
             private void UnregisterCallbacks(IMainPlayerActions instance)
@@ -363,6 +389,9 @@ namespace GameInputs
                 @Run.started -= instance.OnRun;
                 @Run.performed -= instance.OnRun;
                 @Run.canceled -= instance.OnRun;
+                @Jump.started -= instance.OnJump;
+                @Jump.performed -= instance.OnJump;
+                @Jump.canceled -= instance.OnJump;
             }
 
             public void RemoveCallbacks(IMainPlayerActions instance)
@@ -389,6 +418,7 @@ namespace GameInputs
             void OnDance(InputAction.CallbackContext context);
             void OnCrouch(InputAction.CallbackContext context);
             void OnRun(InputAction.CallbackContext context);
+            void OnJump(InputAction.CallbackContext context);
         }
     }
 }

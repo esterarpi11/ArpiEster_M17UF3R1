@@ -11,13 +11,19 @@ public class Idle : StateMachineBehaviour
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         _animator = animator;
+        GameManager.Instance.idle();
+
         InputController.Crouch += Crouch;
         InputController.Walk += Walk;
         InputController.Aim += Aim;
-        GameManager.Instance.idle();
+        InputController.Jump += Jump;
+    }
+    private void Jump()
+    {
+        _animator.SetBool("isJumping", true);
     }
     private void Aim()
-    {
+    {      
         _animator.SetLayerWeight(_animator.GetLayerIndex("Attack"), 1);
         GameManager.Instance.aim();
     }
