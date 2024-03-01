@@ -1,7 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Newtonsoft.Json;
+using System;
 
 public class GameManager : MonoBehaviour
 {
@@ -14,20 +17,10 @@ public class GameManager : MonoBehaviour
 
     public Cinemachine.CinemachineVirtualCamera camera;
 
-    public void idle()
+    private void Awake()
     {
-        camera.m_Lens.FieldOfView = idleFov;
-        //camera.Body.CameraSide = idleSide;
-    }
-    public void walk()
-    {
-        camera.m_Lens.FieldOfView = walkingFov;
-        //camera.Body.CameraSide = idleSide;
-    }
-    public void aim()
-    {
-        camera.m_Lens.FieldOfView = aimingFov;
-        //camera.Body.CameraSide = aimingSide;
+        StreamReader sr = File.OpenText("./Assets/Scripts/Data.json");
+        string content = sr.ReadToEnd();
     }
     // Start is called before the first frame update
     void Start()
@@ -49,6 +42,21 @@ public class GameManager : MonoBehaviour
     {
         if ( n == -1 ) Application.Quit();
         else SceneManager.LoadScene(n);
+    }
+    public void idle()
+    {
+        camera.m_Lens.FieldOfView = idleFov;
+        //camera.Body.CameraSide = idleSide;
+    }
+    public void walk()
+    {
+        camera.m_Lens.FieldOfView = walkingFov;
+        //camera.Body.CameraSide = idleSide;
+    }
+    public void aim()
+    {
+        camera.m_Lens.FieldOfView = aimingFov;
+        //camera.Body.CameraSide = aimingSide;
     }
     public void cameraController()
     {

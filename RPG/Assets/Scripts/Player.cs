@@ -40,31 +40,12 @@ public class MainPlayer : MonoBehaviour
     }
     public void HandleRotation(Vector2 direction)
     {
-        //_transform.Rotate(Vector3.up, direction.x * currentSpeed * Time.deltaTime);
-
-        //float rotationX = Mathf.Clamp(direction.y * currentSpeed, -45f, 45f);
-        //playerCamera.transform.localRotation = Quaternion.Euler(rotationX, 0, 0);
-        //_transform.rotation *= Quaternion.Euler(0, direction.x * currentSpeed, 0);
-
-        _transform.Rotate(new Vector3(0, direction.x * currentSpeed, 0));
-
-        //if ((direction.x > 0.1 || direction.x < -0.1) || (direction.y > 0.1 || direction.y < 0.1))
-        //{
-        //    currentRotation = Quaternion.LookRotation(new Vector3(direction.x, 0f, direction.y));
-        //    transform.rotation = currentRotation;
-        //}
-        //else transform.rotation = currentRotation;
-
-        //Vector3 currentPosition = _transform.position;
-        //Vector3 newPosition = new Vector3(direction.x, 0, direction.y);
-        //Vector3 positionToLookAt = currentPosition + newPosition;
-        //_transform.LookAt(positionToLookAt);
+        _transform.Rotate(new Vector3(0, direction.x * 30, 0));
     }
     public void HandleMovement(Vector2 direction)
     {
-        //_transform.Translate(new Vector3(direction.x, 0f, direction.y) * currentSpeed * Time.deltaTime);
-        rb.velocity = new Vector3(direction.x, 0f, direction.y) * currentSpeed;
-        //rb.velocity = transform.position.z * direction.y * currentSpeed;
+        Vector3 smt = _transform.TransformVector(Vector3.right * direction.x * currentSpeed) + _transform.TransformVector(Vector3.forward * direction.y * currentSpeed);
+        rb.velocity = smt;
     }
     void RunHandler()
     {

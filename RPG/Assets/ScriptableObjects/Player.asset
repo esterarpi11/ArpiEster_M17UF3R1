@@ -15,5 +15,6 @@ MonoBehaviour:
   name: Player
   health: 100
   maxHealth: 100
-  speed: 10
+  speed: 3
   coolDown: 10
+  isDead: 0
