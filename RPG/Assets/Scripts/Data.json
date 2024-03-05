@@ -1,12 +1,12 @@
 {
     "player":{
-        "position":{
-            "x": 0,
-            "y": 0,
-            "z": 0
-        }
-    },
-    "inventory":{
-        "items":{}
+        "positionx":0,
+        "positionY":0,
+        "positionZ":0,
+        "inventory":[
+            {"name": ""},
+            {"name": ""}
+        ]   
     }
+    
 }

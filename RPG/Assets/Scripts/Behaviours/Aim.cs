@@ -14,7 +14,7 @@ public class Aim : StateMachineBehaviour
     private void aim()
     {       
         _animator.SetLayerWeight(_animator.GetLayerIndex("Attack"), 0);
-        GameManager.Instance.idle();
+        GameManager.Instance.cameraController("idle");
     }
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     //override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
