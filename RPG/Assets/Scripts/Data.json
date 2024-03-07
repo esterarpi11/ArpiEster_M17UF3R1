@@ -1,12 +1,39 @@
 {
-    "player":{
-        "positionx":0,
-        "positionY":0,
-        "positionZ":0,
+    "world":{
+        "player":{
+            "positionX":0,
+            "positionY":0,
+            "positionZ":0,
+            "health":100
+        },
         "inventory":[
-            {"name": ""},
-            {"name": ""}
-        ]   
+            {"item": "sword"},
+            {"item": "shield"},
+            {"item": "bow"}
+        ],
+        "enemies":[
+            {"enemy":{
+                "name":"name",
+                "positionX":0,
+                "positionY":0,
+                "positionZ":0,
+                "health":100
+            }},
+            {"enemy":{
+                "name":"name",
+                "positionX":0,
+                "positionY":0,
+                "positionZ":0,
+                "health":100
+            }},
+            {"enemy":{
+                "name":"name",
+                "positionX":0,
+                "positionY":0,
+                "positionZ":0,
+                "health":100
+            }}
+        ]
+        
     }
-    
 }

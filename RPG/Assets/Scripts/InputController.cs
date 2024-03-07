@@ -17,6 +17,7 @@ public class InputController : MonoBehaviour
     public static event Action Aim = delegate { };
     public static event Action Shoot = delegate { };
     public static event Action Jump = delegate { };
+    public static event Action MiniMap = delegate { };
 
     protected Vector2 currentMovement;
 
@@ -47,6 +48,10 @@ public class InputController : MonoBehaviour
         _inputs.MainPlayer.Jump.performed += ctx =>
         {
             Jump.Invoke();
+        };
+        _inputs.MainPlayer.MiniMap.performed += ctx =>
+        {
+            MiniMap.Invoke();
         };
 
         if (Instance == null)
