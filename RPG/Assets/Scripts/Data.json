@@ -4,13 +4,12 @@
             "positionX":0,
             "positionY":0,
             "positionZ":0,
-            "health":100
-        },
+            "health":100,
         "inventory":[
             {"item": "sword"},
             {"item": "shield"},
             {"item": "bow"}
-        ],
+        ]},
         "enemies":[
             {"enemy":{
                 "name":"name",

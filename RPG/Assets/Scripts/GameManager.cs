@@ -29,18 +29,19 @@ public class GameManager : MonoBehaviour
 
     //Clases to get the data stored in the json
     [Serializable]
-    public class PlayerPosition
+    public class World
+    {
+        public PlayerData _playerData;
+        public EnemyData[] _enemyData;
+    }
+    [Serializable]
+    public class PlayerData
     {
         public float positionX;
         public float positionY;
         public float positionZ;
-
-        public PlayerPosition(float positionX, float positionY, float positionZ)
-        {
-            this.positionX = positionX;
-            this.positionY = positionY;
-            this.positionZ = positionZ;
-        }
+        public float health;
+        public float PlayerInventory;
     }
     [Serializable]
     public class PlayerInventory
@@ -52,49 +53,29 @@ public class GameManager : MonoBehaviour
             this.items = items;
         }
     }
+    [Serializable]
+    public class EnemyData
+    {
+        public string name;
+        public float positionX;
+        public float positionY;
+        public float positionZ;
+        public float health;
+    }
 
-    PlayerPosition player;
-    PlayerInventory inventory;
+    World _world;
 
     private void Awake()
     {
         try
         {
-            //First I read the position file
-            StreamReader sr = File.OpenText("./Assets/Scripts/PositionData.txt");
+            //Read the json file
+            StreamReader sr = File.OpenText("./Assets/Scripts/Data.json");
             string content = sr.ReadToEnd();
             sr.Close();
-            string[] positionSplitted = content.Split(';');
-            float[] position = new float[3];
+            _world = JsonUtility.FromJson<World>(content);
 
-            for (int i = 0; i < positionSplitted.Length; i++)
-            {
-                position[i] = float.Parse(positionSplitted[i].Split('=')[1]);
-            }
-
-            player = new PlayerPosition(position[0], position[1], position[2]);
-
-            //After that I do the same with the items file
-            sr = File.OpenText("./Assets/Scripts/InventoryData.txt");
-            content = sr.ReadToEnd();
-            sr.Close();
-            string[] inventorySplitted = content.Split(';');
-            List<string> inventoryList = new List<string>();
-
-            for (int i = 0; i < inventorySplitted.Length; i++)
-            {
-                inventoryList.Add(inventorySplitted[i].Split('=')[1]);
-            }
-
-            string[] items = new string[inventoryList.Count];
-            int n = 0;
-
-            foreach (string item in inventoryList)
-            {
-                items[n] = item;
-                n++;
-            }
-            inventory = new PlayerInventory(items);
+            Debug.Log(_world._playerData.health);
         }
         catch (Exception ex)
         {
@@ -103,7 +84,21 @@ public class GameManager : MonoBehaviour
     }
     public void saveData()
     {
+        //Update player data at this time
+        _world._playerData.positionX=MainPlayer.Instance.transform.position.x;
+        _world._playerData.positionY=MainPlayer.Instance.transform.position.y;
+        _world._playerData.positionZ=MainPlayer.Instance.transform.position.z;
+        _world._playerData.health = MainPlayer.Instance.player.health;
 
+        try
+        {
+            StreamWriter sw = new StreamWriter("./Assets/Scripts/Data.json");
+            string json = JsonUtility.ToJson(_world);
+            sw.WriteLine(json);
+        } catch (Exception ex)
+        {
+            Debug.LogException(ex);
+        }
     }
 
     // Start is called before the first frame update

@@ -13,12 +13,14 @@ public class MainPlayer : MonoBehaviour
     public Transform _transform;
     private Quaternion currentRotation;
     public Rigidbody rb;
-    public Cinemachine.CinemachineVirtualCamera playerCamera;
+    public Camera cam;
+    public Interactable focus;
 
     private void Awake()
     {
         InputController.Run += RunHandler;
         InputController.Crouch += CrouchHandler;
+        InputController.Interact += Interact;
 
         if (Instance == null)
         {
@@ -31,12 +33,12 @@ public class MainPlayer : MonoBehaviour
     void Start()
     {
         currentSpeed = player.speed;
+        cam = Camera.main;
     }
 
     // Update is called once per frame
     void Update()
     {
-
     }
     public void HandleRotation(Vector2 direction)
     {
@@ -46,6 +48,7 @@ public class MainPlayer : MonoBehaviour
     {
         Vector3 smt = _transform.TransformVector(Vector3.right * direction.x * currentSpeed) + _transform.TransformVector(Vector3.forward * direction.y * currentSpeed);
         rb.velocity = smt;
+        RemoveFocus();
     }
     void RunHandler()
     {
@@ -56,5 +59,34 @@ public class MainPlayer : MonoBehaviour
     {
         if (currentSpeed == player.speed) currentSpeed = player.speed - 2;
         else currentSpeed = player.speed;
+    }
+    void Interact()
+    {
+        Ray ray = cam.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+
+        if (Physics.Raycast(ray, out hit, 100))
+        {
+            Interactable interactable = hit.collider.GetComponent<Interactable>();
+            if(Interactable != null)
+            {
+                SetFocus(interactable);
+            }
+        }
+    }
+    void SetFocus(Interactable newFocus)
+    {
+        if(newFocus != focus)
+        {
+            focus = newFocus;
+        }
+        
+        newFocus.isFocus = true;
+        newFocus.hasInteracted = false;
+    }
+    void RemoveFocus()
+    {
+        focus.isFocus = false;
+        focus=null;
     }
 }

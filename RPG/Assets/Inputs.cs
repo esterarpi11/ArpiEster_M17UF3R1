@@ -109,6 +109,15 @@ namespace GameInputs
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Interact"",
+                    ""type"": ""Button"",
+                    ""id"": ""58922e6d-cb20-4f39-8373-caaf494cd428"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -254,6 +263,17 @@ namespace GameInputs
                     ""action"": ""MiniMap"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c3f641c6-1661-4e6b-8ea3-33fd0d7d6b41"",
+                    ""path"": ""<Keyboard>/enter"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Interact"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -271,6 +291,7 @@ namespace GameInputs
             m_MainPlayer_Run = m_MainPlayer.FindAction("Run", throwIfNotFound: true);
             m_MainPlayer_Jump = m_MainPlayer.FindAction("Jump", throwIfNotFound: true);
             m_MainPlayer_MiniMap = m_MainPlayer.FindAction("MiniMap", throwIfNotFound: true);
+            m_MainPlayer_Interact = m_MainPlayer.FindAction("Interact", throwIfNotFound: true);
         }
 
         public void Dispose()
@@ -341,6 +362,7 @@ namespace GameInputs
         private readonly InputAction m_MainPlayer_Run;
         private readonly InputAction m_MainPlayer_Jump;
         private readonly InputAction m_MainPlayer_MiniMap;
+        private readonly InputAction m_MainPlayer_Interact;
         public struct MainPlayerActions
         {
             private @Inputs m_Wrapper;
@@ -354,6 +376,7 @@ namespace GameInputs
             public InputAction @Run => m_Wrapper.m_MainPlayer_Run;
             public InputAction @Jump => m_Wrapper.m_MainPlayer_Jump;
             public InputAction @MiniMap => m_Wrapper.m_MainPlayer_MiniMap;
+            public InputAction @Interact => m_Wrapper.m_MainPlayer_Interact;
             public InputActionMap Get() { return m_Wrapper.m_MainPlayer; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -390,6 +413,9 @@ namespace GameInputs
                 @MiniMap.started += instance.OnMiniMap;
                 @MiniMap.performed += instance.OnMiniMap;
                 @MiniMap.canceled += instance.OnMiniMap;
+                @Interact.started += instance.OnInteract;
+                @Interact.performed += instance.OnInteract;
+                @Interact.canceled += instance.OnInteract;
             }
 
             private void UnregisterCallbacks(IMainPlayerActions instance)
@@ -421,6 +447,9 @@ namespace GameInputs
                 @MiniMap.started -= instance.OnMiniMap;
                 @MiniMap.performed -= instance.OnMiniMap;
                 @MiniMap.canceled -= instance.OnMiniMap;
+                @Interact.started -= instance.OnInteract;
+                @Interact.performed -= instance.OnInteract;
+                @Interact.canceled -= instance.OnInteract;
             }
 
             public void RemoveCallbacks(IMainPlayerActions instance)
@@ -449,6 +478,7 @@ namespace GameInputs
             void OnRun(InputAction.CallbackContext context);
             void OnJump(InputAction.CallbackContext context);
             void OnMiniMap(InputAction.CallbackContext context);
+            void OnInteract(InputAction.CallbackContext context);
         }
     }
 }

@@ -1,1 +1,0 @@
-"positionx"=0;"positionY"=0;"positionZ"=0
