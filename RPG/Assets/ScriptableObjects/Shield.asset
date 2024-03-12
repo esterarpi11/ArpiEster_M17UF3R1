@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Shield
   m_EditorClassIdentifier: 
   name: Shield
+  kind: Shield
   damage: 0
-  price: 10
-  speed: 5
+  health: 0

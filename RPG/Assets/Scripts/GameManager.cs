@@ -74,8 +74,6 @@ public class GameManager : MonoBehaviour
             string content = sr.ReadToEnd();
             sr.Close();
             _world = JsonUtility.FromJson<World>(content);
-
-            Debug.Log(_world._playerData.health);
         }
         catch (Exception ex)
         {

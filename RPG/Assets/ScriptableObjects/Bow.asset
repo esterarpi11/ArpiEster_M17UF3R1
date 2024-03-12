@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Bow
   m_EditorClassIdentifier: 
   name: Bow
+  kind: Weapon
   damage: 10
-  price: 15
-  speed: 10
+  health: 0

@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Sword
   m_EditorClassIdentifier: 
   name: Sword
+  kind: Weapon
   damage: 5
-  price: 10
-  speed: 10
+  health: 0
