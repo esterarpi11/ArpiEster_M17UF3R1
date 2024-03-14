@@ -19,6 +19,7 @@ public class InputController : MonoBehaviour
     public static event Action Jump = delegate { };
     public static event Action MiniMap = delegate { };
     public static event Action Interact = delegate { };
+    public static event Action Inventory = delegate { };
 
     protected Vector2 currentMovement;
 
@@ -57,6 +58,10 @@ public class InputController : MonoBehaviour
         _inputs.MainPlayer.Interact.performed += ctx =>
         {
             Interact.Invoke();
+        };
+        _inputs.MainPlayer.Inventory.performed += ctx =>
+        {
+            Inventory.Invoke();
         };
 
         if (Instance == null)

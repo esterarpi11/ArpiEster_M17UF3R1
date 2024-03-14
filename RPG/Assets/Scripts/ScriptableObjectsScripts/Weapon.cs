@@ -6,7 +6,13 @@ using UnityEngine;
 public class Item : ScriptableObject
 {
     new public string name = "";
+    public Sprite icon;
     public string kind = "";
     public float damage = 0f;
     public float health = 0f;
+
+    public virtual void Use()
+    {
+
+    }
 }

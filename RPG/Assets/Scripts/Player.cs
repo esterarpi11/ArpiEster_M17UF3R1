@@ -48,7 +48,7 @@ public class MainPlayer : MonoBehaviour
     {
         Vector3 smt = _transform.TransformVector(Vector3.right * direction.x * currentSpeed) + _transform.TransformVector(Vector3.forward * direction.y * currentSpeed);
         rb.velocity = smt;
-        RemoveFocus();
+        //RemoveFocus();
     }
     void RunHandler()
     {
@@ -84,9 +84,9 @@ public class MainPlayer : MonoBehaviour
         newFocus.isFocus = true;
         newFocus.hasInteracted = false;
     }
-    void RemoveFocus()
-    {
-        focus.isFocus = false;
-        focus=null;
-    }
+    //void RemoveFocus()
+    //{
+    //    focus.isFocus = false;
+    //    focus=null;
+    //}
 }
