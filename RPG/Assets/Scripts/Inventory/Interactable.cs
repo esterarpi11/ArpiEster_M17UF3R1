@@ -2,16 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Interactable : MonoBehaviour
+public abstract class Interactable : MonoBehaviour
 {
     public float radius = 3f;
     public bool isFocus = false;
     public bool hasInteracted = false;
 
-    public virtual void Interact()
-    {
-
-    }
+    public abstract void Interact();
     private void Update()
     {
         if (isFocus && !hasInteracted)

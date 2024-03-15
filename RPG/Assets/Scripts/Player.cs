@@ -11,7 +11,6 @@ public class MainPlayer : MonoBehaviour
     public Character player;
     public float currentSpeed;
     public Transform _transform;
-    private Quaternion currentRotation;
     public Rigidbody rb;
     public Camera cam;
     public Interactable focus;
@@ -20,7 +19,7 @@ public class MainPlayer : MonoBehaviour
     {
         InputController.Run += RunHandler;
         InputController.Crouch += CrouchHandler;
-        InputController.Interact += Interact;
+        InputController.Interact += PickObject;
 
         if (Instance == null)
         {
@@ -60,7 +59,7 @@ public class MainPlayer : MonoBehaviour
         if (currentSpeed == player.speed) currentSpeed = player.speed - 2;
         else currentSpeed = player.speed;
     }
-    void Interact()
+    void PickObject()
     {
         Ray ray = cam.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;

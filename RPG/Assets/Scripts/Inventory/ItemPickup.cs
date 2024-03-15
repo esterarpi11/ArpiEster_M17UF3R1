@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ItemPickup : Interactable
+public class ItemPickup : IInteractable
 {
     public Item item;
     public override void Interact()

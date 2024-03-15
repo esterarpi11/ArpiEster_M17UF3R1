@@ -267,7 +267,7 @@ namespace GameInputs
                 {
                     ""name"": """",
                     ""id"": ""c3f641c6-1661-4e6b-8ea3-33fd0d7d6b41"",
-                    ""path"": ""<Keyboard>/enter"",
+                    ""path"": ""<Keyboard>/e"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
