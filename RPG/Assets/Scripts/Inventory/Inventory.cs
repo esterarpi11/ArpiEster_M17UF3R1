@@ -34,4 +34,19 @@ public class Inventory : MonoBehaviour
     {
         items.Remove(item);
     }
+    public void clearInventory()
+    {
+        items.Clear();
+    }
+    public string[] getCurrentInventory()
+    {
+        string[] _items = new string[items.Count];
+        int i = 0;
+        foreach(Item item in items)
+        {
+            _items[i] = item.name;
+            i++;
+        }
+        return _items;
+    }
 }

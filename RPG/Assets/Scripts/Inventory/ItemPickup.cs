@@ -15,5 +15,6 @@ public class ItemPickup : IInteractable
     void PickUp()
     {
         if(Inventory.instance.Add(item)) Destroy(gameObject);
+        GameManager.Instance.objectsToBeFound--;
     }
 }

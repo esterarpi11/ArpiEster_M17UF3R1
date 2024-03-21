@@ -41,13 +41,12 @@ public class GameManager : MonoBehaviour
         public float positionY;
         public float positionZ;
         public float health;
-        public float PlayerInventory;
+        public PlayerInventory playerInventory;
     }
     [Serializable]
     public class PlayerInventory
     {
         public string[] items;
-
         public PlayerInventory(string[] items)
         {
             this.items = items;
@@ -74,6 +73,8 @@ public class GameManager : MonoBehaviour
             string content = sr.ReadToEnd();
             sr.Close();
             _world = JsonUtility.FromJson<World>(content);
+            if(_world._playerData.playerInventory.items.Length > 0) InventoryItems.Instance.checkInventory(_world._playerData.playerInventory.items);
+            MainPlayer.Instance.setPlayer(_world._playerData.positionX, _world._playerData.positionY, _world._playerData.positionZ, _world._playerData.health);
         }
         catch (Exception ex)
         {
@@ -83,10 +84,12 @@ public class GameManager : MonoBehaviour
     public void saveData()
     {
         //Update player data at this time
-        _world._playerData.positionX=MainPlayer.Instance.transform.position.x;
-        _world._playerData.positionY=MainPlayer.Instance.transform.position.y;
-        _world._playerData.positionZ=MainPlayer.Instance.transform.position.z;
+        _world._playerData.positionX = MainPlayer.Instance._transform.position.x;
+        _world._playerData.positionY = MainPlayer.Instance._transform.position.y;
+        _world._playerData.positionZ = MainPlayer.Instance._transform.position.z;
         _world._playerData.health = MainPlayer.Instance.player.health;
+        string[] inventory = Inventory.instance.getCurrentInventory();
+        _world._playerData.playerInventory = new PlayerInventory(inventory);
 
         try
         {

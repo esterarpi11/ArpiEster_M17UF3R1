@@ -15,6 +15,12 @@ public class MainPlayer : MonoBehaviour
     public Camera cam;
     public Interactable focus;
 
+
+    public void setPlayer(float x, float y, float z, float health)
+    {
+        _transform.position = new Vector3(x, y, z);
+        player.health = health;
+    }
     private void Awake()
     {
         InputController.Run += RunHandler;

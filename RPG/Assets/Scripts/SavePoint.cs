@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class SavePoint : Interactable
 {
+    public override void Interact()
+    {
+        GameManager.Instance.saveData();
+    }
     // Start is called before the first frame update
     void Start()
     {
