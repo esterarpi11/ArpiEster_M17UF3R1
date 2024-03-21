@@ -27,7 +27,7 @@ public class GameManager : MonoBehaviour
     public GameObject _mainCamera;
     public GameObject _miniMapCamera;
 
-    //Clases to get the data stored in the json
+    //Classes to get the data stored in the json
     [Serializable]
     public class World
     {
