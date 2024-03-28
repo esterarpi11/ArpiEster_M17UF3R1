@@ -13,8 +13,9 @@ public class MainPlayer : MonoBehaviour
     public Transform _transform;
     public Rigidbody rb;
     public Camera cam;
-    public Interactable focus;
-
+    public IInteractable focus;
+    public MeshFilter itemPlacement;
+    public GameObject itemPositon;
 
     public void setPlayer(float x, float y, float z, float health)
     {
@@ -72,14 +73,18 @@ public class MainPlayer : MonoBehaviour
 
         if (Physics.Raycast(ray, out hit, 100))
         {
-            Interactable interactable = hit.collider.GetComponent<Interactable>();
-            if(interactable != null)
+            IInteractable interactable = hit.collider.GetComponent<IInteractable>();
+            if (interactable != null)
             {
                 SetFocus(interactable);
             }
         }
     }
-    void SetFocus(Interactable newFocus)
+    public void setWeapon(Item item)
+    {
+        itemPlacement.mesh = item.mesh;
+    }
+    void SetFocus(IInteractable newFocus)
     {
         if(newFocus != focus)
         {

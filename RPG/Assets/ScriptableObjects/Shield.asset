@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: Shield
   m_EditorClassIdentifier: 
   name: Shield
-  icon: {fileID: 21300000, guid: dc7ae58ea6b6b1740a3a10fcb6ecfa21, type: 3}
+  icon: {fileID: 21300000, guid: 0a3c14e7041164e4e9724e2ee72ac999, type: 3}
   kind: Shield
   damage: 0
   health: 0
+  mesh: {fileID: -5625767158746110976, guid: af042f0d76d05cc439b4f7e1d9ae808c, type: 3}

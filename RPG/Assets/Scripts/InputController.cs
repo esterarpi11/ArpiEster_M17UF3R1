@@ -20,6 +20,7 @@ public class InputController : MonoBehaviour
     public static event Action MiniMap = delegate { };
     public static event Action Interact = delegate { };
     public static event Action Inventory = delegate { };
+    public static event Action ChangeCamera = delegate { };
 
     protected Vector2 currentMovement;
 
@@ -51,10 +52,6 @@ public class InputController : MonoBehaviour
         {
             Jump.Invoke();
         };
-        _inputs.MainPlayer.MiniMap.performed += ctx =>
-        {
-            MiniMap.Invoke();
-        };
         _inputs.MainPlayer.Interact.performed += ctx =>
         {
             Interact.Invoke();
@@ -62,6 +59,14 @@ public class InputController : MonoBehaviour
         _inputs.MainPlayer.Inventory.performed += ctx =>
         {
             Inventory.Invoke();
+        };
+        _inputs.MainPlayer.MiniMap.performed += ctx =>
+        {
+            MiniMap.Invoke();
+        };
+        _inputs.MainPlayer.ChangeCamera.performed += ctx =>
+        {
+            ChangeCamera.Invoke();
         };
 
         if (Instance == null)

@@ -13,19 +13,11 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance;
     public Animator _animator;
 
-    protected float idleFov = 32;
-    protected float walkingFov = 40;
-    protected float aimingFov = 12;
-    protected float aimingSide = 0.8f;
-    protected float idleSide = 0.5f;
-
     public int objectsToBeFound = 3;
-
-    public Cinemachine.CinemachineVirtualCamera mainCamera;
-    public Cinemachine.CinemachineVirtualCamera miniMapCamera;
 
     public GameObject _mainCamera;
     public GameObject _miniMapCamera;
+    public GameObject _fpCamera;
 
     //Classes to get the data stored in the json
     [Serializable]
@@ -73,8 +65,8 @@ public class GameManager : MonoBehaviour
             string content = sr.ReadToEnd();
             sr.Close();
             _world = JsonUtility.FromJson<World>(content);
-            if(_world._playerData.playerInventory.items.Length > 0) InventoryItems.Instance.checkInventory(_world._playerData.playerInventory.items);
-            MainPlayer.Instance.setPlayer(_world._playerData.positionX, _world._playerData.positionY, _world._playerData.positionZ, _world._playerData.health);
+            //if(_world._playerData.playerInventory.items.Length > 0) InventoryItems.Instance.checkInventory(_world._playerData.playerInventory.items);
+            //MainPlayer.Instance.setPlayer(_world._playerData.positionX, _world._playerData.positionY, _world._playerData.positionZ, _world._playerData.health);
         }
         catch (Exception ex)
         {
@@ -114,6 +106,7 @@ public class GameManager : MonoBehaviour
         else Destroy(gameObject);
 
         InputController.MiniMap += miniMap;
+        InputController.ChangeCamera += cameraController;
     }
 
     // Update is called once per frame
@@ -121,10 +114,6 @@ public class GameManager : MonoBehaviour
     {
         //Checks whether the player has found all 3 objects
         if (objectsToBeFound == 0) _animator.SetBool("isDancing", true);
-    }
-    public void miniMap()
-    {
-        _miniMapCamera.SetActive(!_miniMapCamera.activeSelf);
     }
 
     //Basic controller for the menus
@@ -134,20 +123,15 @@ public class GameManager : MonoBehaviour
         else SceneManager.LoadScene(n);
     }
 
-    //Camera controller to set the first or third person camera
-    public void cameraController(string type)
+    //Camera controller to set the minimap view
+    public void miniMap()
     {
-        switch (type)
-        {
-            case "idle":
-                mainCamera.m_Lens.FieldOfView = idleFov;
-                break;
-            case "walk":
-                mainCamera.m_Lens.FieldOfView = walkingFov;
-                break;
-            case "aim":
-                mainCamera.m_Lens.FieldOfView = aimingFov;
-                break;
-        }
+        _miniMapCamera.SetActive(!_miniMapCamera.activeSelf);
+    }
+
+    //Camera controller to set the first or third person camera
+    public void cameraController()
+    {
+        _fpCamera.SetActive(!_fpCamera.activeSelf);     
     }
 }

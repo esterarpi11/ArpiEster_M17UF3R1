@@ -1,7 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem.EnhancedTouch;
 
 public class Idle : StateMachineBehaviour
 {
@@ -11,7 +8,6 @@ public class Idle : StateMachineBehaviour
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         _animator = animator;
-        GameManager.Instance.cameraController("idle");
 
         InputController.Crouch += Crouch;
         InputController.Walk += Walk;
@@ -25,7 +21,6 @@ public class Idle : StateMachineBehaviour
     private void Aim()
     {      
         _animator.SetLayerWeight(_animator.GetLayerIndex("Attack"), 1);
-        GameManager.Instance.cameraController("aim");
     }
     private void Crouch()
     {

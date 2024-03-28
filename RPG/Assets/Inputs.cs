@@ -118,6 +118,15 @@ namespace GameInputs
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ChangeCamera"",
+                    ""type"": ""Button"",
+                    ""id"": ""332c1055-ac35-4be4-aa1d-4b595fd21c6c"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -274,6 +283,17 @@ namespace GameInputs
                     ""action"": ""Interact"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6c367367-8d0f-4e4c-9e26-ee5a590d6988"",
+                    ""path"": ""<Keyboard>/tab"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ChangeCamera"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -292,6 +312,7 @@ namespace GameInputs
             m_MainPlayer_Jump = m_MainPlayer.FindAction("Jump", throwIfNotFound: true);
             m_MainPlayer_MiniMap = m_MainPlayer.FindAction("MiniMap", throwIfNotFound: true);
             m_MainPlayer_Interact = m_MainPlayer.FindAction("Interact", throwIfNotFound: true);
+            m_MainPlayer_ChangeCamera = m_MainPlayer.FindAction("ChangeCamera", throwIfNotFound: true);
         }
 
         public void Dispose()
@@ -363,6 +384,7 @@ namespace GameInputs
         private readonly InputAction m_MainPlayer_Jump;
         private readonly InputAction m_MainPlayer_MiniMap;
         private readonly InputAction m_MainPlayer_Interact;
+        private readonly InputAction m_MainPlayer_ChangeCamera;
         public struct MainPlayerActions
         {
             private @Inputs m_Wrapper;
@@ -377,6 +399,7 @@ namespace GameInputs
             public InputAction @Jump => m_Wrapper.m_MainPlayer_Jump;
             public InputAction @MiniMap => m_Wrapper.m_MainPlayer_MiniMap;
             public InputAction @Interact => m_Wrapper.m_MainPlayer_Interact;
+            public InputAction @ChangeCamera => m_Wrapper.m_MainPlayer_ChangeCamera;
             public InputActionMap Get() { return m_Wrapper.m_MainPlayer; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -416,6 +439,9 @@ namespace GameInputs
                 @Interact.started += instance.OnInteract;
                 @Interact.performed += instance.OnInteract;
                 @Interact.canceled += instance.OnInteract;
+                @ChangeCamera.started += instance.OnChangeCamera;
+                @ChangeCamera.performed += instance.OnChangeCamera;
+                @ChangeCamera.canceled += instance.OnChangeCamera;
             }
 
             private void UnregisterCallbacks(IMainPlayerActions instance)
@@ -450,6 +476,9 @@ namespace GameInputs
                 @Interact.started -= instance.OnInteract;
                 @Interact.performed -= instance.OnInteract;
                 @Interact.canceled -= instance.OnInteract;
+                @ChangeCamera.started -= instance.OnChangeCamera;
+                @ChangeCamera.performed -= instance.OnChangeCamera;
+                @ChangeCamera.canceled -= instance.OnChangeCamera;
             }
 
             public void RemoveCallbacks(IMainPlayerActions instance)
@@ -479,6 +508,7 @@ namespace GameInputs
             void OnJump(InputAction.CallbackContext context);
             void OnMiniMap(InputAction.CallbackContext context);
             void OnInteract(InputAction.CallbackContext context);
+            void OnChangeCamera(InputAction.CallbackContext context);
         }
     }
 }

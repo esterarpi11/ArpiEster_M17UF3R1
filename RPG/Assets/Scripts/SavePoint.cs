@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SavePoint : Interactable
+public class SavePoint : IInteractable
 {
     public override void Interact()
     {

@@ -10,9 +10,10 @@ public class Item : ScriptableObject
     public string kind = "";
     public float damage = 0f;
     public float health = 0f;
+    public Mesh mesh = null;
 
     public virtual void Use()
     {
-
+        MainPlayer.Instance.setWeapon(this);
     }
 }
