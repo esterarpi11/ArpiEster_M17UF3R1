@@ -5,6 +5,7 @@ using UnityEngine;
 public class ItemPickup : IInteractable
 {
     public Item item;
+    public AudioSource pickUpObject;
     public override void Interact()
     {
         base.Interact();
@@ -15,5 +16,7 @@ public class ItemPickup : IInteractable
     void PickUp()
     {
         if(Inventory.instance.Add(item)) Destroy(gameObject);
+        GameManager.Instance.objectsToBeFound -= 1;
+        pickUpObject.Play();
     }
 }

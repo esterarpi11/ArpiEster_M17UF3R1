@@ -10,6 +10,11 @@ public class Aim : StateMachineBehaviour
     {
         _animator = animator;
         InputController.Aim += aim;
+        InputController.Shoot += Shoot;
+    }
+    void Shoot()
+    {
+        _animator.SetBool("isShooting", true);
     }
     private void aim()
     {       

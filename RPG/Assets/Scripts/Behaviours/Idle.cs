@@ -19,8 +19,9 @@ public class Idle : StateMachineBehaviour
         _animator.SetBool("isJumping", true);
     }
     private void Aim()
-    {      
-        _animator.SetLayerWeight(_animator.GetLayerIndex("Attack"), 1);
+    {
+        if (_animator.GetLayerWeight(_animator.GetLayerIndex("Attack")) == 0) _animator.SetLayerWeight(_animator.GetLayerIndex("Attack"), 1);
+        else _animator.SetLayerWeight(_animator.GetLayerIndex("Attack"), 0);
     }
     private void Crouch()
     {

@@ -4,9 +4,6 @@ using System.IO;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using System;
-using TreeEditor;
-using System.Linq;
-using Unity.VisualScripting;
 
 public class GameManager : MonoBehaviour
 {
@@ -19,42 +16,33 @@ public class GameManager : MonoBehaviour
     public GameObject _miniMapCamera;
     public GameObject _fpCamera;
 
+    public AudioSource changeCamera;
+    public AudioSource gotAllObjects;
+
+    bool alreadyPlayed = false;
+
+
     //Classes to get the data stored in the json
-    [Serializable]
-    public class World
-    {
-        public PlayerData _playerData;
-        public EnemyData[] _enemyData;
-    }
     [Serializable]
     public class PlayerData
     {
-        public float positionX;
-        public float positionY;
-        public float positionZ;
-        public float health;
-        public PlayerInventory playerInventory;
-    }
-    [Serializable]
-    public class PlayerInventory
-    {
-        public string[] items;
-        public PlayerInventory(string[] items)
+        public float positionX { get; set; }
+        public float positionY { get; set; }
+        public float positionZ { get; set; }
+        public float health { get; set; }
+        public string[] inventoryItems { get; set; }
+
+        public PlayerData(float positionX, float positionY, float positionZ, float health, string[] inventoryItems)
         {
-            this.items = items;
+            this.positionX = positionX;
+            this.positionY = positionY;
+            this.positionZ = positionZ;
+            this.health = health;
+            this.inventoryItems = inventoryItems;
         }
     }
-    [Serializable]
-    public class EnemyData
-    {
-        public string name;
-        public float positionX;
-        public float positionY;
-        public float positionZ;
-        public float health;
-    }
 
-    World _world;
+    PlayerData playerData;
 
     private void Awake()
     {
@@ -64,9 +52,9 @@ public class GameManager : MonoBehaviour
             StreamReader sr = File.OpenText("./Assets/Scripts/Data.json");
             string content = sr.ReadToEnd();
             sr.Close();
-            _world = JsonUtility.FromJson<World>(content);
-            //if(_world._playerData.playerInventory.items.Length > 0) InventoryItems.Instance.checkInventory(_world._playerData.playerInventory.items);
-            //MainPlayer.Instance.setPlayer(_world._playerData.positionX, _world._playerData.positionY, _world._playerData.positionZ, _world._playerData.health);
+            playerData = JsonUtility.FromJson<PlayerData>(content);
+            //if (playerData.playerInventory.items.Length > 0) InventoryItems.Instance.checkInventory(playerData.playerInventory.items);
+            //MainPlayer.Instance.setPlayer(playerData.positionX, playerData.positionY, playerData.positionZ, playerData.health);
         }
         catch (Exception ex)
         {
@@ -76,17 +64,17 @@ public class GameManager : MonoBehaviour
     public void saveData()
     {
         //Update player data at this time
-        _world._playerData.positionX = MainPlayer.Instance._transform.position.x;
-        _world._playerData.positionY = MainPlayer.Instance._transform.position.y;
-        _world._playerData.positionZ = MainPlayer.Instance._transform.position.z;
-        _world._playerData.health = MainPlayer.Instance.player.health;
-        string[] inventory = Inventory.instance.getCurrentInventory();
-        _world._playerData.playerInventory = new PlayerInventory(inventory);
-
+        playerData.positionX = MainPlayer.Instance._transform.position.x;
+        playerData.positionY = MainPlayer.Instance._transform.position.y;
+        playerData.positionZ = MainPlayer.Instance._transform.position.z;
+        playerData.health = MainPlayer.Instance.player.health;
+        //string[] inventory = Inventory.instance.getCurrentInventory();
+        //playerData.inventoryItems = inventory;
+        Debug.Log(playerData);
         try
         {
             StreamWriter sw = new StreamWriter("./Assets/Scripts/Data.json");
-            string json = JsonUtility.ToJson(_world);
+            string json = JsonUtility.ToJson(playerData, true);
             sw.WriteLine(json);
         } catch (Exception ex)
         {
@@ -113,7 +101,18 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         //Checks whether the player has found all 3 objects
-        if (objectsToBeFound == 0) _animator.SetBool("isDancing", true);
+        if (objectsToBeFound == 0 && !alreadyPlayed)
+        {
+            _animator.SetBool("isDancing", true);
+            gotAllObjects.Play();
+            alreadyPlayed = true;
+            StartCoroutine(StopDancing());
+        }
+    }
+    IEnumerator StopDancing()
+    {
+        yield return new WaitForSeconds(3);
+        _animator.SetBool("isDancing", false);
     }
 
     //Basic controller for the menus
@@ -126,12 +125,36 @@ public class GameManager : MonoBehaviour
     //Camera controller to set the minimap view
     public void miniMap()
     {
-        _miniMapCamera.SetActive(!_miniMapCamera.activeSelf);
+        if (_miniMapCamera.activeSelf == true)
+        {
+            _miniMapCamera.SetActive(false);
+            _fpCamera.SetActive(false);
+            _mainCamera.SetActive(true);
+        }
+        else
+        {
+            _miniMapCamera.SetActive(true);
+            _fpCamera.SetActive(false);
+            _mainCamera.SetActive(false);
+            changeCamera.Play();
+        }
     }
 
     //Camera controller to set the first or third person camera
     public void cameraController()
     {
-        _fpCamera.SetActive(!_fpCamera.activeSelf);     
+        if (_fpCamera.activeSelf == true)
+        {
+            _miniMapCamera.SetActive(false);
+            _fpCamera.SetActive(false);
+            _mainCamera.SetActive(true);
+        }
+        else
+        {
+            _miniMapCamera.SetActive(false);
+            _fpCamera.SetActive(true);
+            _mainCamera.SetActive(false);
+            changeCamera.Play();
+        }
     }
 }

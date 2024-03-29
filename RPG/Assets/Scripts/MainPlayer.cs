@@ -1,9 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
-using UnityEngine.EventSystems;
-using UnityEngine.InputSystem;
 
 public class MainPlayer : MonoBehaviour
 {
@@ -11,11 +6,13 @@ public class MainPlayer : MonoBehaviour
     public Character player;
     public float currentSpeed;
     public Transform _transform;
+    public Animator _animator;
     public Rigidbody rb;
     public Camera cam;
     public IInteractable focus;
     public MeshFilter itemPlacement;
     public GameObject itemPositon;
+    public bool isGrounded = true;
 
     public void setPlayer(float x, float y, float z, float health)
     {
@@ -45,6 +42,14 @@ public class MainPlayer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //if(Mathf.Abs(rb.velocity.y) < 0.01)
+        //{
+        //    _animator.SetBool("isGrounded", false);
+        //}
+        //else
+        //{
+        //    _animator.SetBool("isGrounded", true);
+        //}
     }
     public void HandleRotation(Vector2 direction)
     {
@@ -54,7 +59,6 @@ public class MainPlayer : MonoBehaviour
     {
         Vector3 smt = _transform.TransformVector(Vector3.right * direction.x * currentSpeed) + _transform.TransformVector(Vector3.forward * direction.y * currentSpeed);
         rb.velocity = smt;
-        //RemoveFocus();
     }
     void RunHandler()
     {
@@ -94,9 +98,4 @@ public class MainPlayer : MonoBehaviour
         newFocus.isFocus = true;
         newFocus.hasInteracted = false;
     }
-    //void RemoveFocus()
-    //{
-    //    focus.isFocus = false;
-    //    focus=null;
-    //}
 }
